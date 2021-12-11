@@ -1,43 +1,34 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 sem_choices = (("1", 1),		("2", 2),		("3", 3),		("4", 4),
                ("5", 5), 		("6", 6), 		("7", 7),		("8", 8),	)
 
 
-class User(AbstractUser):
-    # Boolean fields to select the type of account.
-    is_admin = models.BooleanField(default=False)
-    is_student = models.BooleanField(default=False)
-    is_faculty = models.BooleanField(default=False)
-
 
 class Student(models.Model):
-    student = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     usn = models.CharField(max_length=9, primary_key=True)
     name = models.CharField(max_length=25)
     dept = models.CharField(max_length=3)
     semester = models.SmallIntegerField(choices=sem_choices)
+    password = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
 
 
 class Admin(models.Model):
-    admin = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=25)
-
+    username = models.CharField(max_length=10, primary_key=True)
+    password = models.CharField(max_length=30,default=None)
     def __str__(self):
         return self.name
 
 
 class Faculty(models.Model):
-    faculty = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=25)
     dept = models.CharField(max_length=3)
+    username = models.CharField(max_length=20)
+    password = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name

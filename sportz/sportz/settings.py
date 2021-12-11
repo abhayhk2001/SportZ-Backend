@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5ep^!xh2e##kaeobl3n5y@32q_6-(v-$)re&)b(b$uwo+c43j&'
+SECRET_KEY = 'django-insecure-5#*yj_85kg-6bwkc-os16$e1=b@0l)ztp$u0*&)rug1yd&fdkq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,17 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_auth',
-    'rest_auth.registration',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -57,21 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
-
-SITE_ID = 1
-
-AUTH_USER_MODEL = 'api.USER'
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ROOT_URLCONF = 'sportz.urls'
 
