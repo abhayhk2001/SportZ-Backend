@@ -8,17 +8,19 @@ from .views import studentviews
 app_name = 'api'
 
 urlpatterns = [
-	path('',adminviews.apiList, name="apiList"),
-	path('admin/login',adminviews.login, name="Admin Login"),
-	path('add/student',adminviews.addStudent, name="Add Student"),
-	path('add/faculty',adminviews.addFaculty, name="Add Faculty"),
-	path('add/event',adminviews.addEvent, name="Add Event"),
-	path('add/sportevent',adminviews.addSportEvent, name="Add Season Event"),
-	path('add/sportsteam',adminviews.addSportTeam, name="Add Sport Team"),
-	path('add/match',adminviews.addMatch, name="Add Match"),
+	# path('',adminviews.apiList, name="apiList"),
+	# path('admin/login',adminviews.login, name="Admin Login"),
+	# path('add/student',adminviews.addStudent, name="Add Student"),
+	# path('add/faculty',adminviews.addFaculty, name="Add Faculty"),
+	# path('add/event',adminviews.addEvent, name="Add Event"),
+	# path('add/sportevent',adminviews.addSportEvent, name="Add Season Event"),
+	# path('add/sportsteam',adminviews.addSportTeam, name="Add Sport Team"),
+	# path('add/match',adminviews.addMatch, name="Add Match"),
+	# path('updatematch',adminviews.updateMatch, name="Update Match"),
 	path('admin/studentinfo',adminviews.adminStudentInfo,name="Admin Student Information"),
 	path('admin/facultyinfo',adminviews.adminFacultyInfo,name="Admin Faculty Information"),
-	path('updatematch',adminviews.updateMatch, name="Update Match"),
+	path('admin/eventsinfo',adminviews.adminEventsInfo,name="Admin Events Information"),
+	path('admin/matchesinfo',adminviews.adminMatchesInfo,name="Admin Matches Information"),
 
 
 	# Admin and Faculty
