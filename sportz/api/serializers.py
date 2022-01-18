@@ -2,20 +2,24 @@ from rest_framework import serializers
 
 from api.models import Student, Admin, Faculty, Sport, SportsTeam, Event, SportEvent, Matches
 
+
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Student
-        fields: '__all__'
+        model = Student
+        fields = ('usn', 'name', 'dept', 'semester')
 
-class FacultySerializer(serializers.Serializer):
-    class Meta:
-        model: Faculty
-        fields: '__all__'
 
-class AdminSerializer(serializers.Serializer):
+class FacultySerializer(serializers.ModelSerializer):
     class Meta:
-        model: Admin
-        fields: '__all__'
+        model = Faculty
+        fields = ('username', 'name', 'dept')
+
+
+class AdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Admin
+        fields = '__all__'
+
 
 class SportSerializer(serializers.ModelSerializer):
     class Meta:

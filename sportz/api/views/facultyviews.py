@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from api.models import Faculty, Student
+from api.models import Faculty, Student, SportsTeam
 from api.serializers import FacultySerializer, StudentSerializer
-
 
 
 # Create your views here.
@@ -12,10 +11,11 @@ def login(request):
     params = request.query_params.dict()
     body = request.data.dict()
     if(params['user'] != 'faculty'):
-        return Response({'message':'Login User Error'})
+        return Response({'message': 'Login User Error'})
     success = True
     try:
-        search = Faculty.objects.get(username=body['username'], password=body['password'])
+        search = Faculty.objects.get(
+            username=body['username'], password=body['password'])
     except:
         success = False
     if(not success):
@@ -35,9 +35,9 @@ def facultyStudentInfo(request):
     params = request.query_params.dict()
     body = request.data.dict()
     if(params['user'] not in ['faculty']):
-        return Response({"success": False,'message':'User Error'})
+        return Response({"success": False, 'message': 'User Error'})
     success = True
-    serializer = StudentSerializer(SportsTeam.objects.all(),many= True)
+    serializer = StudentSerializer(SportsTeam.objects.all(), many=True)
     return Response(serializer.data)
 
 
@@ -46,10 +46,11 @@ def facultyInfo(request):
     params = request.query_params.dict()
     body = request.data.dict()
     if(params['user'] != 'faculty'):
-        return Response({'message':'Login User Error'})
+        return Response({'message': 'Login User Error'})
     success = True
     try:
-        search = Faculty.objects.get(username=int((body['token'].split('-'))[1]))
+        search = Faculty.objects.get(
+            username=int((body['token'].split('-'))[1]))
     except:
         success = False
     if(not success):
