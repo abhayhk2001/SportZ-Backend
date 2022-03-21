@@ -8,15 +8,7 @@ from .views import studentviews
 app_name = 'api'
 
 urlpatterns = [
-    # path('',adminviews.apiList, name="apiList"),
-    # path('admin/login',adminviews.login, name="Admin Login"),
-    # path('add/student',adminviews.addStudent, name="Add Student"),
-    # path('add/faculty',adminviews.addFaculty, name="Add Faculty"),
-    # path('add/event',adminviews.addEvent, name="Add Event"),
-    # path('add/sportevent',adminviews.addSportEvent, name="Add Season Event"),
-    # path('add/sportsteam',adminviews.addSportTeam, name="Add Sport Team"),
-    # path('add/match',adminviews.addMatch, name="Add Match"),
-    # path('updatematch',adminviews.updateMatch, name="Update Match"),
+    path('admin/login', adminviews.login, name="Admin Login"),
     path('admin/studentinfo', adminviews.adminStudentInfo,
          name="Admin Student Information"),
     path('admin/facultyinfo', adminviews.adminFacultyInfo,
@@ -25,6 +17,8 @@ urlpatterns = [
          name="Admin Events Information"),
     path('admin/matchesinfo', adminviews.adminMatchesInfo,
          name="Admin Matches Information"),
+    path('admin/sporteventinfo', adminviews.adminSportEventInfo,
+         name="Sport Event Information"),
     path('admin/countinfo', adminviews.adminCountInfo,
          name="Admin Count Information"),
 
@@ -35,6 +29,8 @@ urlpatterns = [
 
 
     # Faculty
+    path('faculty/countinfo', facultyviews.facultyCountInfo,
+         name="Faculty Count Information"),
     path('faculty/login', facultyviews.login, name="Faculty Login"),
     path('faculty/studentinfo', facultyviews.facultyStudentInfo,
          name="Faculty Student Information"),

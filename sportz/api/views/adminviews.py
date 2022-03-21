@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import json
-from api.models import Student, Faculty, Matches, Event, SportEvent, Sport
-from api.serializers import StudentSerializer, FacultySerializer, EventSerializer, MatchesSerializer
+from api.models import Student, Faculty, Matches, Event, SportEvent, Sport, Admin
+from api.serializers import StudentSerializer, FacultySerializer, EventSerializer, MatchesSerializer, SportEventSerializer
 from collections import OrderedDict
+import json
 
 
 # Create your views here.
@@ -28,6 +27,27 @@ def adminStudentInfo(request):
     serializer = StudentSerializer(
         Student.objects.all().values('usn', 'name', 'dept', 'semester'), many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def adminSportEventInfo(request):
+    serializer = SportEventSerializer(
+        SportEvent.objects.all(), many=True)
+    raw = serializer.data
+    if((raw[0])['is_team_event']):
+        for i in range(len(raw)):
+            raw[i].pop('is_team_event')
+            raw[i].pop('participant_ind_1')
+            raw[i].pop('participant_ind_2')
+    else:
+        for i in range(len(raw)):
+            raw[i].pop('is_team_event')
+            raw[i].pop('participants_team')
+            raw[i].pop('participants_ind')
+            raw[i]['event'] = Event.objects.get(
+                id=raw[i]['event']).__str__()
+            raw[i]['sports'] = Sport.objects.get(
+                id=raw[i]['sports']).__str__()
 
 
 @api_view(['GET'])
@@ -71,92 +91,23 @@ def adminCountInfo(request):
     count['sports'] = Sport.objects.all().count()
     return Response(count)
 
-    # @api_view(['POST'])
-    # def login(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     if(params['user'] != 'admin'):
-    #         return Response({'message':'Login User Error'})
-    #     success = True
-    #     try:
-    #         search = Admin.objects.get(username=body['username'], password=body['password'])
-    #     except:
-    #         success = False
-    #     if(not success):
-    #         response = {
-    #             'success': success,
-    #         }
-    #     else:
-    #         response = {
-    #             'user': 'admin-'+search.username,
-    #             'success': success,
-    #         }
-    #     return Response(response)
 
-    # @api_view(['POST'])
-    # def addStudent(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     success = False
-    #     serializer = StudentSerializer(data=request.data)
-    #     if(serializer.is_valid()):
-    #         serializer.save()
-    #         success = True
-    #     response = {
-    #             'success': success,
-    #     }
-    #     return Response(response)
-
-    # @api_view(['POST'])
-    # def addFaculty(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
-
-    # @api_view(['POST'])
-    # def addEvent(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
-
-    # @api_view(['POST'])
-    # def addSportEvent(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
-
-    # @api_view(['POST'])
-    # def addSportTeam(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
-
-    # @api_view(['POST'])
-    # def addMatch(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
-
-    # @api_view(['GET'])
-    # def updateMatch(request):
-    #     params = request.query_params.dict()
-    #     body = request.data.dict()
-    #     api_urls = {
-    #         'Login': '/login',
-    #     }
-    #     return Response(api_urls)
+@api_view(['POST'])
+def login(request):
+    body = json.loads(request.body)
+    success = True
+    try:
+        search = Admin.objects.get(
+            username=body['username'], password=body['password'])
+    except:
+        success = False
+    if(not success):
+        response = {
+            'success': success,
+        }
+    else:
+        response = {
+            'user': 'admin-'+str(search.username),
+            'success': success,
+        }
+    return Response(response)
